@@ -1,14 +1,49 @@
 package main
 
 import (
-	"fmt"
-  "github.com/colorspray/dice"
+	//"fmt"
+  "github.com/colorspray/dice" // started from: https://github.com/narqo/go-dice
+  "encoding/json"
+  "github.com/gorilla/mux"
+  "net/http"
 )
 
+type Roll struct {
+  Notation string
+	Total int
+  Natural int
+	Dicevals []int
+}
 
 func main() {
-  dc, err := dice.Parse("1d20");
-  if err == nil {
-    fmt.Println(dc.Roll())
+  r := mux.NewRouter()
+  r.HandleFunc("/roll/{notation}", RollHandler)
+  r.HandleFunc("/roll", RollHandler)
+  http.ListenAndServe(":3000", r)
+}
+
+func RollHandler(w http.ResponseWriter, r *http.Request) {
+  vars := mux.Vars(r)
+  notation, ok := vars["notation"]
+  if !ok {
+    notation = "1d20"
   }
+
+  dc, err := dice.Parse(notation);
+  if err == nil {
+    var theroll Roll
+    theroll.Notation = notation
+    theroll.Total, theroll.Natural, theroll.Dicevals = dc.Roll()
+    js, err := json.Marshal(theroll)
+    if err != nil {
+      http.Error(w, err.Error(), http.StatusInternalServerError)
+      return
+    }
+    w.Header().Set("Server", "colorspray")
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(200)
+    w.Write(js)
+    return
+  }
+  http.Error(w, err.Error(), http.StatusInternalServerError)
 }
