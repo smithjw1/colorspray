@@ -21,7 +21,7 @@ func main() {
   r := mux.NewRouter()
   r.HandleFunc("/roll/{notation}", RollHandler)
   r.HandleFunc("/roll", RollHandler)
-  if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
+  if err := http.ListenAndServe(":"+os.Getenv("PORT"), r); err != nil {
     panic(err)
   }
 }
