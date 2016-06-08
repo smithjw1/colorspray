@@ -2,7 +2,7 @@ package main
 
 import (
 	//"fmt"
-  "github.com/colorspray/dice" // started from: https://github.com/narqo/go-dice
+  "github.com/smithjw1/colorspray/dice" // started from: https://github.com/narqo/go-dice
   "encoding/json"
   "github.com/gorilla/mux"
   "net/http"
