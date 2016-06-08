@@ -2,6 +2,7 @@ package main
 
 import (
 	//"fmt"
+  "log"
   "github.com/smithjw1/colorspray/dice" // started from: https://github.com/narqo/go-dice
   "encoding/json"
   "github.com/gorilla/mux"
@@ -16,10 +17,14 @@ type Roll struct {
 }
 
 func main() {
+
   r := mux.NewRouter()
   r.HandleFunc("/roll/{notation}", RollHandler)
   r.HandleFunc("/roll", RollHandler)
-  http.ListenAndServe(":3000", r)
+  if err := http.ListenAndServe("localhost:3000", nil); err != nil {
+    log.Fatal("ListenAndServe: ", err)
+}
+
 }
 
 func RollHandler(w http.ResponseWriter, r *http.Request) {
