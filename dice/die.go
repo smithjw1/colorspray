@@ -5,12 +5,12 @@ import (
 	"math/rand"
 )
 
-type die struct {
-	faces int
+type Die struct {
+	Faces int
 }
 
-func (d die) Roll() int {
+func (d Die) Roll() int {
   s1 := rand.NewSource(time.Now().UnixNano())
   r1 := rand.New(s1)
-	return r1.Intn(d.faces) + 1
+	return r1.Intn(d.Faces) + 1
 }

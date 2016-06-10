@@ -6,25 +6,25 @@ import (
 	"strings"
 )
 
-type dice struct {
-	num int
-  modifier int
-	die die
+type Dice struct {
+	Num int
+  Modifier int
+	Die Die
 }
 
-func (d dice) Roll() (int, int, []int) {
+func (d Dice) Roll() (int, int, []int) {
 	r := 0
-  diceval := make([]int, d.num)
-	for i := 0; i < d.num; i++ {
-		val := d.die.Roll()
+  diceval := make([]int, d.Num)
+	for i := 0; i < d.Num; i++ {
+		val := d.Die.Roll()
 		r += val
     diceval[i] += val
 	}
-  total := r + d.modifier
+  total := r + d.Modifier
 	return total, r, diceval;
 }
 
-func Parse(notation string) (d *dice, err error) {
+func Parse(notation string) (d *Dice, err error) {
   var num int
   var modifier int
 	var faces int
@@ -58,10 +58,10 @@ func Parse(notation string) (d *dice, err error) {
     return nil, errors.New("bad notation \"" + notation + "\"")
   }
 
-  d = &dice{
-		num: num,
-    modifier: modifier,
-		die: die{faces: faces},
+  d = &Dice{
+		Num: num,
+    Modifier: modifier,
+		Die: Die{Faces: faces},
 	}
 	return d, nil
 }
