@@ -12,6 +12,14 @@ type Attack struct {
   OppAC int
 }
 
+type AttackResult struct {
+  Hit bool
+  AttackRoll dice.RollData
+  Crit bool
+  CritRoll dice.RollData
+  Damage dice.RollData
+}
+
 func ParseAttack() (Attack) {
 
   a := Attack{
@@ -24,12 +32,12 @@ func ParseAttack() (Attack) {
   return a
 }
 
-func (a Attack) Make() (bool, int, bool, int, int) {
+func (a Attack) Make() (*AttackResult) {
 
   hit := false
   crit := false
-  cR := 0
-  dR := 0
+  var cR dice.RollData
+  var dR dice.RollData
 
   d := &dice.Dice{
     Num: 1,
@@ -37,27 +45,35 @@ func (a Attack) Make() (bool, int, bool, int, int) {
 		Die: dice.Die{Faces: 20},
   }
 
-  var aR int
-  aR, _, _ = d.Roll()
+  aR := d.Roll()
 
-  if aR > a.OppAC {
+  if aR.Total > a.OppAC {
     hit = true
 
     dD, _ := dice.Parse(a.Damage)
 
     dD.Modifier = a.Base + a.Ability
 
-    dR, _, _ = dD.Roll()
+    dR = dD.Roll()
 
-    if aR > a.MinCrit {
-      cR, _, _ = d.Roll()
-      if cR > a.OppAC {
+    if aR.Total >= a.MinCrit {
+      cR = d.Roll()
+      if cR.Total > a.OppAC {
         crit = true
-        dR = dR * 2
+        dR.Total += dR.Natural
+        dR.Natural = dR.Natural * 2
       }
     }
 
   }
 
-  return hit, aR, crit, cR, dR
+  theAttack := &AttackResult {
+    Hit: hit,
+    AttackRoll: aR,
+    Crit: crit,
+    CritRoll: cR,
+    Damage: dR,
+  }
+
+  return theAttack
 }

@@ -12,7 +12,15 @@ type Dice struct {
 	Die Die
 }
 
-func (d Dice) Roll() (int, int, []int) {
+type RollData struct {
+	Total int
+  Natural int
+  Modifier int
+	Dicevals []int
+}
+
+func (d Dice) Roll() (RollData) {
+  var theRoll RollData
 	r := 0
   diceval := make([]int, d.Num)
 	for i := 0; i < d.Num; i++ {
@@ -20,8 +28,11 @@ func (d Dice) Roll() (int, int, []int) {
 		r += val
     diceval[i] += val
 	}
-  total := r + d.Modifier
-	return total, r, diceval;
+  theRoll.Total = r + d.Modifier
+  theRoll.Natural = r
+  theRoll.Modifier = d.Modifier
+  theRoll.Dicevals = diceval
+	return theRoll
 }
 
 func Parse(notation string) (d *Dice, err error) {
