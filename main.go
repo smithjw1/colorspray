@@ -4,63 +4,49 @@ import (
 	"fmt"
   "github.com/smithjw1/colorspray/dice" // started from: https://github.com/narqo/go-dice
   "github.com/smithjw1/colorspray/character"
+	"github.com/smithjw1/colorspray/csdb"
   "encoding/json"
   "github.com/gorilla/mux"
   "net/http"
   "os"
-  "github.com/satori/go.uuid"
-  "io/ioutil"
+	"strconv"
+	"log"
+
 )
 
+type CSError struct {
+	Message string
+}
+
+
 func main() {
+	fmt.Printf("%v\n", "clashing colors")
 
-    u1 := uuid.NewV4()
-    fmt.Printf("UUIDv4: %s\n", u1)
+	f, err := os.OpenFile("colorspray.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	if err != nil {
+	    fmt.Printf("error opening file: %v", err)
+	}
+	defer f.Close()
 
-    client := &http.Client{}
-    req, _ := http.NewRequest("GET", "https://api.airtable.com/v0/appiaQ2jqi3R7oHsA/Characters?maxRecords=1&view=Main%20View&filterByFormula=Name%3D%226922a942-6482-42d2-8bd7-2598101abf6c%22", nil)
-    req.Header.Set("Authorization", "Bearer keyC8IAYh8YbF4PcG")
-    res, err := client.Do(req)
+	log.SetOutput(f)
 
-    if err != nil {
-        panic(err.Error())
-    }
+	db := csdb.Open()
+	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS people (id UUID PRIMARY KEY, data jsonb)")
+	err != nil {
+		log.Printf("Error creating database table: %q", err)
+	}
 
-    body, err := ioutil.ReadAll(res.Body)
-    res.Body.Close()
-	  if err != nil {
-        panic(err.Error())
-    }
-    fmt.Printf("%s", body)
-
-
-    type Fields struct {
-      Name string
-      AC int
-    }
-    type Records struct {
-      id string
-      Fields []Fields
-      createdTime string
-    }
-    type Characters struct {
-      Records []Records
-    }
-
-    var data Characters
-
-    json.Unmarshal(body, &data)
-    fmt.Printf("Results: %v\n", data)
-
-    return
   r := mux.NewRouter()
   r.HandleFunc("/roll/{notation}", RollHandler)
   r.HandleFunc("/roll", RollHandler)
   r.HandleFunc("/attack", AttackHandler)
+	r.HandleFunc("/attack/{attacker}/{weapon}/{defender}", AttackHandler)
+	r.HandleFunc("/attack/{attacker}/{weapon}/{defender}/{range}", AttackHandler)
+	r.HandleFunc("/character/create", CreatePerson)
+
   if err := http.ListenAndServe(":"+os.Getenv("PORT"), r); err != nil {
     panic(err)
   }
-
 }
 
 func RollHandler(w http.ResponseWriter, r *http.Request) {
@@ -89,16 +75,73 @@ func RollHandler(w http.ResponseWriter, r *http.Request) {
 
 func AttackHandler(w http.ResponseWriter, r *http.Request) {
 
-  decoder := json.NewDecoder(r.Body)
+	var aT character.Attack
+	w.Header().Set("Server", "colorspray")
+  w.Header().Set("Content-Type", "application/json")
 
-  var a character.Attack
-  err := decoder.Decode(&a)
 
-  if err != nil {
-    panic(err)
-  }
+	vars := mux.Vars(r)
+  a, ok := vars["attacker"]
+	we,ok := vars["weapon"]
+	d,ok := vars["defender"]
+  if ok {
+		tW := character.GetWeapon(we)
 
-  theAttack := a.Make();
+		if tW.Loaded == 0 {
+			w.WriteHeader(200)
+			resp := CSError {
+				Message: "item is not loaded",
+			}
+			js, _ := json.Marshal(resp)
+		  w.Write(js)
+			return
+		}
+
+		if tW.Ammo == 0 {
+			w.WriteHeader(200)
+			resp := CSError {
+				Message: "out of ammo",
+			}
+			js, _ := json.Marshal(resp)
+		  w.Write(js)
+			return
+		}
+
+		tA := character.GetPerson(a)
+		tD := character.GetPerson(d)
+		aT.Base = tA.Base
+	  aT.SizeMod = tA.SizeMod
+
+		rGi := 5
+		rG,rok := vars["range"]
+		if rok {
+			rGi, _ = strconv.Atoi(rG)
+			aT.Ability = tA.Abilities.Dex
+		} else {
+			aT.Ability = tA.Abilities.Str
+		}
+
+		p := 0
+		o := rGi/tW.Wrange
+		if o > 1 {
+			p = o * 2
+		}
+
+	  aT.RangePen = p
+	  aT.Damage  = tW.Damage
+	  aT.MinCrit = tW.MinCrit
+	  aT.CritMulti = tW.CritMulti
+	  aT.OppAC = tD.Ac
+  } else {
+		decoder := json.NewDecoder(r.Body)
+	  err := decoder.Decode(&aT)
+	  if err != nil {
+	    panic(err)
+	  }
+	}
+
+
+  theAttack := aT.Make();
 
   js, err := json.Marshal(theAttack)
   if err != nil {
@@ -106,10 +149,24 @@ func AttackHandler(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  w.Header().Set("Server", "colorspray")
-  w.Header().Set("Content-Type", "application/json")
-  w.WriteHeader(200)
+	w.WriteHeader(200)
   w.Write(js)
 
   return
+}
+
+func CreatePerson(w http.ResponseWriter, r *http.Request) {
+	var p character.Person
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&p)
+	if err != nil {
+		panic(err)
+	}
+	id := p.Create()
+	w.Header().Set("Server", "colorspray")
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+  w.Write([]byte(id))
+
+	return
 }

@@ -1,0 +1,86 @@
+2016/07/13 23:26:35 http: panic serving [::1]:62086: runtime error: invalid memory address or nil pointer dereference
+goroutine 21 [running]:
+net/http.(*conn).serve.func1(0xc820098b80)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1389 +0xc1
+panic(0x3ccea0, 0xc82000a0d0)
+	/usr/local/Cellar/go/1.6.2/libexec/src/runtime/panic.go:443 +0x4e9
+database/sql.(*DB).conn(0x0, 0xc820072101, 0xc820108900, 0x0, 0x0)
+	/usr/local/Cellar/go/1.6.2/libexec/src/database/sql/sql.go:778 +0xac9
+database/sql.(*DB).prepare(0x0, 0x4bd060, 0x29, 0x19e001, 0xc820108900, 0x0, 0x0)
+	/usr/local/Cellar/go/1.6.2/libexec/src/database/sql/sql.go:981 +0x4e
+database/sql.(*DB).Prepare(0x0, 0x4bd060, 0x29, 0x799020, 0x0, 0x0)
+	/usr/local/Cellar/go/1.6.2/libexec/src/database/sql/sql.go:963 +0x76
+github.com/smithjw1/colorspray/character.Person.Create(0xa, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xa, 0x0, ...)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/character/person.go:51 +0x90
+main.CreatePerson(0x7a2aa8, 0xc820075ba0, 0xc820102380)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/main.go:174 +0x177
+net/http.HandlerFunc.ServeHTTP(0x4fc088, 0x7a2aa8, 0xc820075ba0, 0xc820102380)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1618 +0x3a
+github.com/smithjw1/colorspray/vendor/github.com/gorilla/mux.(*Router).ServeHTTP(0xc8200826e0, 0x7a2aa8, 0xc820075ba0, 0xc820102380)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/vendor/github.com/gorilla/mux/mux.go:107 +0x297
+net/http.serverHandler.ServeHTTP(0xc820098b00, 0x7a2aa8, 0xc820075ba0, 0xc820102380)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:2081 +0x19e
+net/http.(*conn).serve(0xc820098b80)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1472 +0xf2e
+created by net/http.(*Server).Serve
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:2137 +0x44e
+2016/07/13 23:28:42 dial tcp [::1]:5432: getsockopt: connection refused
+2016/07/13 23:29:39 http: panic serving [::1]:62163: EOF
+goroutine 21 [running]:
+net/http.(*conn).serve.func1(0xc820098b80)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1389 +0xc1
+panic(0x3afe80, 0xc82006e040)
+	/usr/local/Cellar/go/1.6.2/libexec/src/runtime/panic.go:443 +0x4e9
+main.CreatePerson(0x7a2a78, 0xc820075790, 0xc820102380)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/main.go:170 +0x161
+net/http.HandlerFunc.ServeHTTP(0x4fc128, 0x7a2a78, 0xc820075790, 0xc820102380)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1618 +0x3a
+github.com/smithjw1/colorspray/vendor/github.com/gorilla/mux.(*Router).ServeHTTP(0xc8200826e0, 0x7a2a78, 0xc820075790, 0xc820102380)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/vendor/github.com/gorilla/mux/mux.go:107 +0x297
+net/http.serverHandler.ServeHTTP(0xc820098b00, 0x7a2a78, 0xc820075790, 0xc820102380)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:2081 +0x19e
+net/http.(*conn).serve(0xc820098b80)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1472 +0xf2e
+created by net/http.(*Server).Serve
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:2137 +0x44e
+2016/07/13 23:29:39 http: panic serving [::1]:62164: EOF
+goroutine 22 [running]:
+net/http.(*conn).serve.func1(0xc820098c00)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1389 +0xc1
+panic(0x3afe80, 0xc82006e040)
+	/usr/local/Cellar/go/1.6.2/libexec/src/runtime/panic.go:443 +0x4e9
+main.CreatePerson(0x7a2a78, 0xc820075860, 0xc820102460)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/main.go:170 +0x161
+net/http.HandlerFunc.ServeHTTP(0x4fc128, 0x7a2a78, 0xc820075860, 0xc820102460)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1618 +0x3a
+github.com/smithjw1/colorspray/vendor/github.com/gorilla/mux.(*Router).ServeHTTP(0xc8200826e0, 0x7a2a78, 0xc820075860, 0xc820102460)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/vendor/github.com/gorilla/mux/mux.go:107 +0x297
+net/http.serverHandler.ServeHTTP(0xc820098b00, 0x7a2a78, 0xc820075860, 0xc820102460)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:2081 +0x19e
+net/http.(*conn).serve(0xc820098c00)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1472 +0xf2e
+created by net/http.(*Server).Serve
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:2137 +0x44e
+2016/07/13 23:29:39 http: panic serving [::1]:62165: EOF
+goroutine 23 [running]:
+net/http.(*conn).serve.func1(0xc820099000)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1389 +0xc1
+panic(0x3afe80, 0xc82006e040)
+	/usr/local/Cellar/go/1.6.2/libexec/src/runtime/panic.go:443 +0x4e9
+main.CreatePerson(0x7a2a78, 0xc820075a00, 0xc820102700)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/main.go:170 +0x161
+net/http.HandlerFunc.ServeHTTP(0x4fc128, 0x7a2a78, 0xc820075a00, 0xc820102700)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1618 +0x3a
+github.com/smithjw1/colorspray/vendor/github.com/gorilla/mux.(*Router).ServeHTTP(0xc8200826e0, 0x7a2a78, 0xc820075a00, 0xc820102700)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/vendor/github.com/gorilla/mux/mux.go:107 +0x297
+net/http.serverHandler.ServeHTTP(0xc820098b00, 0x7a2a78, 0xc820075a00, 0xc820102700)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:2081 +0x19e
+net/http.(*conn).serve(0xc820099000)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1472 +0xf2e
+created by net/http.(*Server).Serve
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:2137 +0x44e
+2016/07/13 23:29:51 dial tcp [::1]:5432: getsockopt: connection refused
+2016/07/13 23:31:32 dial tcp [::1]:5432: getsockopt: connection refused
+2016/07/13 23:44:50 dial tcp [::1]:5432: getsockopt: connection refused
+2016/07/13 23:47:58 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/13 23:50:57 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
