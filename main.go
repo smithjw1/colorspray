@@ -107,6 +107,8 @@ func AttackHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		a = "44888e26-d4d9-4fad-b807-e0ccb954bea1";
+
 		tA := character.GetPerson(a)
 		tD := character.GetPerson(d)
 		aT.Base = tA.Base

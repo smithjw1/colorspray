@@ -44,14 +44,15 @@ func (p Person) Create() (id string) {
 	uID := uuid.NewV4()
 
 	db := csdb.Open()
-	stmt, err := db.Prepare("INSERT INTO people(id, data) VALUES(?, ?)")
+	stmt, err := db.Prepare("INSERT INTO people(id, data) VALUES($1, $2)")
 	if err != nil {
-		log.Fatal(err)
-	}
-	_, err2 := stmt.Exec(uID, p)
-	if err2 != nil {
-		log.Fatal(err2)
+		log.Printf("Error creating database statement: %q", err)
 	}
 
+	_, err = stmt.Exec(uID, p)
+	if err != nil {
+		log.Printf("Error exeuciting statement: %q", err)
+	}
+	
 	return uID.String()
 }

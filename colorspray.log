@@ -84,3 +84,67 @@ created by net/http.(*Server).Serve
 2016/07/13 23:44:50 dial tcp [::1]:5432: getsockopt: connection refused
 2016/07/13 23:47:58 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
 2016/07/13 23:50:57 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/13 23:52:34 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/13 23:52:50 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/13 23:54:49 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 00:13:35 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 00:15:43 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 00:16:46 Connected to database: &{%!q(*pq.drv=&{}) "dbname=jacobsmith sslmode=require" '\x00' {'\x00' '\x00'} [] [] '\x00' %!q(chan struct {}=0xc82005e180) %!q(bool=false) map[] map[] '\x00' '\x00' '\x00' %!q(chan struct {}=<nil>)}
+2016/07/14 00:16:46 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 00:18:01 Connected to database
+2016/07/14 00:18:01 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 00:18:47 Connected to database
+2016/07/14 00:18:47 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 00:18:47 Connected to database &{%!q(*pq.drv=&{}) "dbname=jacobsmith sslmode=require" '\x00' {'\x00' '\x00'} [] [] '\x00' %!q(chan struct {}=0xc82006c180) %!q(bool=false) map[] map[] '\x00' '\x00' '\x00' %!q(chan struct {}=<nil>)}
+2016/07/14 08:11:57 Connected to database
+2016/07/14 08:11:57 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 08:12:13 Connected to database
+2016/07/14 08:12:13 dial tcp [::1]:5432: getsockopt: connection refused
+2016/07/14 08:13:47 Connected to database
+2016/07/14 08:13:47 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 08:13:52 Connected to database
+2016/07/14 08:13:52 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 08:13:52 http: panic serving [::1]:64879: runtime error: invalid memory address or nil pointer dereference
+goroutine 6 [running]:
+net/http.(*conn).serve.func1(0xc820016d80)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1389 +0xc1
+panic(0x3ccf20, 0xc82000a0d0)
+	/usr/local/Cellar/go/1.6.2/libexec/src/runtime/panic.go:443 +0x4e9
+database/sql.(*Stmt).Exec(0x0, 0xc82013b928, 0x2, 0x2, 0x0, 0x0, 0x0, 0x0)
+	/usr/local/Cellar/go/1.6.2/libexec/src/database/sql/sql.go:1457 +0x3df
+github.com/smithjw1/colorspray/character.Person.Create(0xa, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xa, 0x0, ...)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/character/person.go:51 +0x2f9
+main.CreatePerson(0x79a0a8, 0xc82010c000, 0xc8200ea380)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/main.go:165 +0x177
+net/http.HandlerFunc.ServeHTTP(0x4fc148, 0x79a0a8, 0xc82010c000, 0xc8200ea380)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1618 +0x3a
+github.com/smithjw1/colorspray/vendor/github.com/gorilla/mux.(*Router).ServeHTTP(0xc8200147d0, 0x79a0a8, 0xc82010c000, 0xc8200ea380)
+	/Users/jacobsmith/go/src/github.com/smithjw1/colorspray/vendor/github.com/gorilla/mux/mux.go:107 +0x297
+net/http.serverHandler.ServeHTTP(0xc820016d00, 0x79a0a8, 0xc82010c000, 0xc8200ea380)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:2081 +0x19e
+net/http.(*conn).serve(0xc820016d80)
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:1472 +0xf2e
+created by net/http.(*Server).Serve
+	/usr/local/Cellar/go/1.6.2/libexec/src/net/http/server.go:2137 +0x44e
+2016/07/14 08:15:09 Connected to database
+2016/07/14 08:15:09 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 08:17:18 Connected to database
+2016/07/14 08:17:18 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 08:17:31 Connected to database
+2016/07/14 08:17:31 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 08:17:31 Satemen: %!q(*sql.Stmt=<nil>)
+2016/07/14 08:18:19 Connected to database
+2016/07/14 08:18:19 Error creating database table: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 08:18:28 Connected to database
+2016/07/14 08:18:28 Error creating database statement: "dial tcp [::1]:5432: getsockopt: connection refused"
+2016/07/14 08:18:28 Statement: %!q(*sql.Stmt=<nil>)
+2016/07/14 08:21:46 Connected to database
+2016/07/14 08:21:59 Connected to database
+2016/07/14 08:22:00 Error creating database statement: "pq: syntax error at or near \",\""
+2016/07/14 08:22:00 Statement: %!q(*sql.Stmt=<nil>)
+2016/07/14 08:23:05 Connected to database
+2016/07/14 08:23:15 Connected to database
+2016/07/14 08:23:15 Statement: &{%!q(*sql.DB=&{0x6657f0 dbname=d6ua9ak3she8oc host=ec2-54-163-245-3.compute-1.amazonaws.com password=18yyvf2Z6wwppVvkQuhBMA4fV4 port=5432 user=dvxhuburbcdccv sslmode=require 0 {0 0} [0xc8201a5d50] [] 1 0xc82005f680 false map[0xc820017780:map[0xc820017780:true] 0xc8201a5d50:map[0xc8201a5d50:true]] map[] 0 0 0 <nil>}) "INSERT INTO people(id, data) VALUES($1, $2)" <nil> {{'\x00' '\x00'} '\x00' '\x00' '\x00' '\x00'} %!q(*sql.Tx=<nil>) %!q(*sql.driverStmt=<nil>) {'\x00' '\x00'} %!q(bool=false) [{%!q(*sql.driverConn=&{0xc8200da790 {63604106595 742536443 0x6488a0} {0 0} 0xc820085b80 false false map[0xc820081cc0:true] false [] false}) %!q(*pq.stmt=&{0xc820085b80 1 [] [] [0 0] [] [2950 3802] false})}] '\x00'}
+2016/07/14 08:23:46 Connected to database
+2016/07/14 08:23:57 Connected to database
+2016/07/14 08:23:57 Error exeuciting statement: "sql: converting Exec argument #1's type: unsupported type character.Person, a struct"

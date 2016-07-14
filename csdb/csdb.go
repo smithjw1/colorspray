@@ -3,14 +3,19 @@ package csdb
 import (
   "os"
 	"database/sql"
-	_ "github.com/lib/pq"
+	"github.com/lib/pq"
 	"log"
 )
 
 func Open() *sql.DB {
-	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	url := os.Getenv("DATABASE_URL")
+  connection, _ := pq.ParseURL(url)
+  connection += " sslmode=require"
+	db, err := sql.Open("postgres", connection)
   if err != nil {
-    log.Printf("Error connectint to database: %q", err)
-  }
+    log.Printf("Error connecting to database: %q", err)
+  } else {
+		log.Printf("Connected to database")
+	}
   return db
 }
